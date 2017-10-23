@@ -25,7 +25,6 @@ class Home extends Component {
 
       reader.onload = function(e) {
         audioArea.src = reader.result
-        audioArea.playbackRate = 2
         audioArea.play()
       }
 
@@ -58,6 +57,7 @@ class Home extends Component {
   }
 
   changePlaybackRate = (e) => {
+    audioArea.playbackRate = e.target.value
     this.setState({playbackRate: e.target.value})
   }
 
@@ -85,7 +85,7 @@ class Home extends Component {
             <audio id="audioArea" src={state.audioSrc} controls playbackRate={2} />
 
             <div className="playback-control-container">
-              <input id="playbackControl" type="range" value={state.playbackRate} min="0.1" max="4" step="0.1" onInput={this.changePlaybackRate} />
+              <input id="playbackControl" type="range" value={state.playbackRate} min="0.5" max="4" step="0.1" onInput={this.changePlaybackRate} />
               <p>Playback Rate <span id="currentPlaybackRate">{state.playbackRate}</span></p>
             </div>
           </section>

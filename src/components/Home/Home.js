@@ -16,17 +16,53 @@ class Home extends Component {
   }
 
   onDrop = (files) => {
-    this.setState({files})
+    let file = files[0]
+    let musicType = /mp3.*/
+
+    if (file.type.match(musicType)) {
+      let reader = new FileReader()
+
+      reader.onload = function(e) {
+        audioArea.src = reader.result
+      }
+
+      reader.onloadstart = function() {
+        console.log('onloadstart')
+      }
+
+      reader.onprogress = function() {
+        console.log('onprogress')
+      }
+
+      reader.onloadend = function() {
+        console.log('onloadend')
+      }
+
+      reader.onabort = function() {
+        console.log('onabort')
+      }
+
+      reader.onerror = function() {
+        console.log('onerror')
+      }
+
+      reader.readAsDataURL(file)
+    }
+    else {
+      audioArea.src = 'http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg'
+      console.log('audio not supported, switching to default song...')
+    }
   }
 
   render() {
     const {state} = this;
+    console.log(state)
 
     return (
       <div className="Home">
         <section>
           <div className="dropzone">
-            <Dropzone onDrop={this.onDrop.bind(this)}>
+            <Dropzone onDrop={this.onDrop}>
               <p>Try dropping some files here, or click to select files to upload.</p>
             </Dropzone>
           </div>
@@ -35,6 +71,10 @@ class Home extends Component {
             <h2>Dropped files</h2>
             <ul>{this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)}</ul>
           </aside>
+        </section>
+
+        <section>
+          <audio id="audioArea" src={state.audioSrc} controls />
         </section>
       </div>
     );

@@ -7,14 +7,8 @@ class Home extends Component {
     super(props)
 
     this.state = {
-      firstName: '',
-      lastName: '',
-      organization: '',
-      city: '',
-      telephone: '',
-      ext: '',
-      emailAddress: '',
-      projectDetails: '',
+      audioSrc: 'http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg',
+      audioType: 'audio/ogg',
     }
   }
 
@@ -31,7 +25,7 @@ class Home extends Component {
           <div className="section banner">
             <div className="sub sub-1">
               <audio controls="controls">
-                <source src="http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg" type="audio/ogg" />
+                <source src={state.audioSrc} type={state.audioType} />
                 <source src="track.mp3" type="audio/mpeg" />
                   Your browser does not support the audio element.
               </audio>

@@ -24,6 +24,7 @@ class Home extends Component {
 
       reader.onload = function(e) {
         audioArea.src = reader.result
+        audioArea.play()
       }
 
       reader.onloadstart = function() {

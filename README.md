@@ -1,1 +1,1 @@
-Singularity Software website
+music-player-web-app

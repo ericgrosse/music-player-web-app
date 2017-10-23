@@ -38,7 +38,11 @@ class Home extends Component {
             </div>
 
             <div className="sub sub-2">
-              Sub 2
+              <div id="columns">
+                <div className="column" draggable="true"><header>A</header></div>
+                <div className="column" draggable="true"><header>B</header></div>
+                <div className="column" draggable="true"><header>C</header></div>
+              </div>
             </div>
 
             <div className="sub sub-3">

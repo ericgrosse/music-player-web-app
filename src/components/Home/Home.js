@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Dropzone from 'react-dropzone'
+
 import 'components/Home/Home.scss'
 
 class Home extends Component {
@@ -9,11 +11,12 @@ class Home extends Component {
     this.state = {
       audioSrc: 'http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg',
       audioType: 'audio/ogg',
+      files: [],
     }
   }
 
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value})
+  onDrop = (files) => {
+    this.setState({files})
   }
 
   render() {
@@ -21,33 +24,18 @@ class Home extends Component {
 
     return (
       <div className="Home">
-        <div className="wrapper">
-          <div className="section banner">
-            <div className="sub sub-1">
-              <audio controls="controls">
-                <source src={state.audioSrc} type={state.audioType} />
-                <source src="track.mp3" type="audio/mpeg" />
-                  Your browser does not support the audio element.
-              </audio>
-            </div>
-
-            <div className="sub sub-2">
-              <div id="columns">
-                <div className="column" draggable="true"><header>A</header></div>
-                <div className="column" draggable="true"><header>B</header></div>
-                <div className="column" draggable="true"><header>C</header></div>
-              </div>
-            </div>
-
-            <div className="sub sub-3">
-              Sub 3
-            </div>
-
-            <div className="sub sub-4">
-              Sub 4
-            </div>
+        <section>
+          <div className="dropzone">
+            <Dropzone onDrop={this.onDrop.bind(this)}>
+              <p>Try dropping some files here, or click to select files to upload.</p>
+            </Dropzone>
           </div>
-        </div>
+
+          <aside>
+            <h2>Dropped files</h2>
+            <ul>{this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)}</ul>
+          </aside>
+        </section>
       </div>
     );
   }

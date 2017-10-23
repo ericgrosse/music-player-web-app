@@ -31,7 +31,7 @@ class Home extends Component {
           <div className="section banner">
             <div className="sub sub-1">
               <audio controls="controls">
-                <source src="track.ogg" type="audio/ogg" />
+                <source src="http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg" type="audio/ogg" />
                 <source src="track.mp3" type="audio/mpeg" />
                   Your browser does not support the audio element.
               </audio>

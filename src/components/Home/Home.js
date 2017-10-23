@@ -12,6 +12,7 @@ class Home extends Component {
       audioSrc: 'http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg',
       audioType: 'audio/ogg',
       files: [],
+      playbackRate: 1,
     }
   }
 
@@ -24,6 +25,7 @@ class Home extends Component {
 
       reader.onload = function(e) {
         audioArea.src = reader.result
+        audioArea.playbackRate = 2
         audioArea.play()
       }
 
@@ -55,28 +57,39 @@ class Home extends Component {
     }
   }
 
+  changePlaybackRate = (e) => {
+    this.setState({playbackRate: e.target.value})
+  }
+
   render() {
     const {state} = this;
     console.log(state)
 
     return (
       <div className="Home">
-        <section>
-          <div className="dropzone">
-            <Dropzone onDrop={this.onDrop}>
-              <p>Try dropping some files here, or click to select files to upload.</p>
-            </Dropzone>
-          </div>
+        <div className="container">
+          <section>
+            <div className="dropzone">
+              <Dropzone onDrop={this.onDrop}>
+                <p>Try dropping some files here, or click to select files to upload.</p>
+              </Dropzone>
+            </div>
 
-          <aside>
-            <h2>Dropped files</h2>
-            <ul>{this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)}</ul>
-          </aside>
-        </section>
+            <aside>
+              <h2>Dropped files</h2>
+              <ul>{this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)}</ul>
+            </aside>
+          </section>
 
-        <section>
-          <audio id="audioArea" src={state.audioSrc} controls />
-        </section>
+          <section>
+            <audio id="audioArea" src={state.audioSrc} controls playbackRate={2} />
+
+            <div className="playback-control-container">
+              <input id="playbackControl" type="range" value={state.playbackRate} min="0.1" max="4" step="0.1" onInput={this.changePlaybackRate} />
+              <p>Playback Rate <span id="currentPlaybackRate">{state.playbackRate}</span></p>
+            </div>
+          </section>
+        </div>
       </div>
     );
   }

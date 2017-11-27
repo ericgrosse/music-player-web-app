@@ -69,6 +69,7 @@ class Home extends Component {
       <div className="Home">
         <div className="container">
           <section>
+            <h1>Music Player Web App</h1>
             <div className="dropzone">
               <Dropzone onDrop={this.onDrop}>
                 <p>Try dropping some files here, or click to select files to upload.</p>

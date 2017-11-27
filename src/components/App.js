@@ -19,12 +19,7 @@ class App extends Component {
 
     return (
       <div>
-        {
-          props.windowWidth >= 1000 ?
-          <Header /> :
-          <MobileHeader />
-        }
-        <Routes />
+        <Routes/>
       </div>
     )
   }

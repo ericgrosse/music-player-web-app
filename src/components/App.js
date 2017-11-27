@@ -10,7 +10,7 @@ class App extends Component {
   componentDidMount() {
     // Ping the herokuapp url every 5 mins to prevent it from sleeping
     setInterval(function() {
-      http.get('https://music-player-web-app.herokuapp.com/')
+      http.get('https://music-player-web-app.herokuapp.com')
     }, 300000)
   }
 

@@ -16,6 +16,7 @@ class App extends Component {
   }
 
   onDrop = (files) => {
+    const self = this
     let file = files[0]
     let musicType = /mp3.*/
 
@@ -23,41 +24,42 @@ class App extends Component {
       let reader = new FileReader()
 
       reader.onload = function(e) {
-        this.audioArea.src = reader.result
-        this.audioArea.play()
+        self.audioArea.src = reader.result
+        self.audioArea.play()
       }
 
       reader.onloadstart = function() {
-        console.log('onloadstart')
+        //console.log('onloadstart')
       }
 
       reader.onprogress = function() {
-        console.log('onprogress')
+        //console.log('onprogress')
       }
 
       reader.onloadend = function() {
-        console.log('onloadend')
+        //console.log('onloadend')
       }
 
       reader.onabort = function() {
-        console.log('onabort')
+        //console.log('onabort')
       }
 
       reader.onerror = function() {
-        console.log('onerror')
+        //console.log('onerror')
       }
 
       reader.readAsDataURL(file)
     }
     else {
-      this.audioArea.src = 'http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg'
+      self.audioArea.src = 'http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg'
       console.log('audio not supported, switching to default song...')
     }
   }
 
   changePlaybackRate = (e) => {
-    this.audioArea.playbackRate = e.target.value
-    this.setState({playbackRate: e.target.value})
+    const self = this
+    self.audioArea.playbackRate = e.target.value
+    self.setState({playbackRate: e.target.value})
   }
 
   render() {
@@ -82,7 +84,7 @@ class App extends Component {
           </section>
 
           <section>
-            <audio ref={r => this.audioArea = r} src={state.audioSrc} controls playbackRate={2} />
+            <audio ref={input => { this.audioArea = input; }} src={state.audioSrc} controls playbackRate={2} />
 
             <div className="playback-control-container">
               <input id="playbackControl" type="range" value={state.playbackRate} min="0.5" max="4" step="0.01" onInput={this.changePlaybackRate} />

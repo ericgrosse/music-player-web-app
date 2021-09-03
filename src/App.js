@@ -18,9 +18,8 @@ class App extends Component {
   onDrop = (files) => {
     const self = this
     let file = files[0]
-    let musicType = /mp3.*/
 
-    if (file.type.match(musicType)) {
+    if (file.type === 'audio/mpeg' /* simplified assumption, works with mp3s */) {
       let reader = new FileReader()
 
       reader.onload = function(e) {
@@ -87,7 +86,7 @@ class App extends Component {
             <audio ref={input => { this.audioArea = input; }} src={state.audioSrc} controls playbackRate={2} />
 
             <div className="playback-control-container">
-              <input id="playbackControl" type="range" value={state.playbackRate} min="0.5" max="4" step="0.01" onInput={this.changePlaybackRate} />
+              <input id="playbackControl" type="range" value={state.playbackRate} min="0.1" max="4" step="0.01" onInput={this.changePlaybackRate} />
               <p>Playback Rate <span id="currentPlaybackRate">{state.playbackRate}</span></p>
             </div>
           </section>

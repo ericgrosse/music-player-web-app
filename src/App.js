@@ -19,7 +19,7 @@ class App extends Component {
     const self = this
     let file = files[0]
 
-    if (file.type === 'audio/mpeg' /* simplified assumption, works with mp3s */) {
+    if (file.type === 'audio/mpeg' || file.type === 'audio/x-m4a' /* simplified assumption, works with mp3 & m4a format */) {
       let reader = new FileReader()
 
       reader.onload = function(e) {

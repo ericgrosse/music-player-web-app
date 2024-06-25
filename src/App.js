@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import './App.css';
+import './App.scss';
 
 class App extends Component {
   constructor(props) {
@@ -120,8 +120,13 @@ class App extends Component {
             <h1>Music Player Web App</h1>
             <div className="dropzone">
               <Dropzone onDrop={this.onDrop}>
-                <p>Try dropping some files here, or click to select files to upload.</p>
-              </Dropzone>
+                {({ getRootProps, getInputProps }) => (
+                  <div {...getRootProps()} className="dropzone">
+                    <input {...getInputProps()} />
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                  </div>
+                )}
+            </Dropzone>
             </div>
 
             <aside>

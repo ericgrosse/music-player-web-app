@@ -57,6 +57,12 @@ class App extends Component {
     }
   };
 
+  changePlaybackRate = (e) => {
+    const newPlaybackRate = parseFloat(e.target.value);
+    this.audioArea.playbackRate = newPlaybackRate;
+    this.setState({ playbackRate: newPlaybackRate });
+  };
+
   changeSetting = (setting, value) => {
     this.setState({ [setting]: value });
   };
@@ -125,7 +131,7 @@ class App extends Component {
           </section>
 
           <section>
-            <audio ref={input => { this.audioArea = input; }} src={state.audioSrc} controls playbackRate={2} />
+            <audio ref={input => { this.audioArea = input; }} src={state.audioSrc} controls />
 
             <div className="playback-control-container">
               <input id="playbackControl" type="range" value={state.playbackRate} min="0.1" max="4" step="0.01" onInput={this.changePlaybackRate} />

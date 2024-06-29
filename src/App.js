@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
 import './App.scss';
+import DrumControls from './components/DrumControls';
+import DropzoneAudio from './components/DropzoneAudio';
+import PlaybackControl from './components/PlaybackControl';
 
 class App extends Component {
   constructor(props) {
@@ -38,7 +40,7 @@ class App extends Component {
     this.setState({ noiseBuffer: buffer });
   };
 
-  onDrop = (files) => {
+  handleDrop = (files) => {
     const self = this;
     let file = files[0];
 
@@ -118,104 +120,24 @@ class App extends Component {
         <div className="container">
           <section>
             <h1>Music Player Web App</h1>
-            <div className="dropzone">
-              <Dropzone onDrop={this.onDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <div {...getRootProps()} className="dropzone">
-                    <input {...getInputProps()} />
-                    <p>Try dropping some files here, or click to select files to upload.</p>
-                  </div>
-                )}
-            </Dropzone>
-            </div>
-
-            <aside>
-              <h2>Dropped files</h2>
-              <ul>{this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)}</ul>
-            </aside>
+            <DropzoneAudio files={state.files} handleDrop={this.handleDrop} />
           </section>
 
           <section>
             <audio ref={input => { this.audioArea = input; }} src={state.audioSrc} controls />
-
-            <div className="playback-control-container">
-              <input id="playbackControl" type="range" value={state.playbackRate} min="0.1" max="4" step="0.01" onInput={this.changePlaybackRate} />
-              <p>Playback Rate <span id="currentPlaybackRate">{state.playbackRate}</span></p>
-            </div>
+            <PlaybackControl playbackRate={state.playbackRate} changePlaybackRate={this.changePlaybackRate} />
           </section>
 
           <section>
-            <div className="drum-control">
-              <label htmlFor="attackTime">Attack Time (s):</label>
-              <input
-                id="attackTime"
-                type="range"
-                min="0.01"
-                max="1"
-                step="0.01"
-                value={state.attackTime}
-                onChange={(e) => this.changeSetting('attackTime', parseFloat(e.target.value))}
-              />
-              <span>{state.attackTime}s</span>
-            </div>
-
-            <div className="drum-control">
-              <label htmlFor="decayTime">Decay Time (s):</label>
-              <input
-                id="decayTime"
-                type="range"
-                min="0.1"
-                max="2"
-                step="0.1"
-                value={state.decayTime}
-                onChange={(e) => this.changeSetting('decayTime', parseFloat(e.target.value))}
-              />
-              <span>{state.decayTime}s</span>
-            </div>
-
-            <div className="drum-control">
-              <label htmlFor="pitch">Pitch (Hz):</label>
-              <input
-                id="pitch"
-                type="range"
-                min="30"
-                max="100"
-                step="1"
-                value={state.pitch}
-                onChange={(e) => this.changeSetting('pitch', parseFloat(e.target.value))}
-              />
-              <span>{state.pitch} Hz</span>
-            </div>
-
-            <div className="drum-control">
-              <label htmlFor="noiseLevel">Noise Level:</label>
-              <input
-                id="noiseLevel"
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={state.noiseLevel}
-                onChange={(e) => this.changeSetting('noiseLevel', parseFloat(e.target.value))}
-              />
-              <span>{state.noiseLevel}</span>
-            </div>
-
-            <div className="drum-control">
-              <label htmlFor="filterCutoff">Filter Cutoff (Hz):</label>
-              <input
-                id="filterCutoff"
-                type="range"
-                min="500"
-                max="5000"
-                step="100"
-                value={state.filterCutoff}
-                onChange={(e) => this.changeSetting('filterCutoff', parseFloat(e.target.value))}
-              />
-              <span>{state.filterCutoff} Hz</span>
-            </div>
-
-            <button onClick={this.playDrumSound}>Play Drum Sound</button>
+            <DrumControls
+              attackTime={state.attackTime}
+              decayTime={state.decayTime}
+              pitch={state.pitch}
+              noiseLevel={state.noiseLevel}
+              filterCutoff={state.filterCutoff}
+              changeSetting={this.changeSetting}
+              playDrumSound={this.playDrumSound}
+            />
           </section>
         </div>
       </div>
